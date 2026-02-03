@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container results-page animate">
+    <div class="results-card">
+        <h2>Resume Screening Results</h2>
+        <p class="muted">AI analyzed your resume and job description.</p>
+
+        <table class="results-table">
+            <tr>
+                <th>Resume</th>
+                <th>Match Score</th>
+            </tr>
+
+            {% for row in data %}
+            <tr>
+                <td>{{ row["Resume"] }}</td>
+                <td>{{ row["Match Score"] }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <p class="note">CSV file saved in <b>/output</b> folder.</p>
+    </div>
+</div>
+
+<footer class="footer">© 2025 AI Resume Scanner</footer>
+
+</body>
+</html>

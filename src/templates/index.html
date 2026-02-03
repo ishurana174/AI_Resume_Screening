@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Resume Screening Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="container top-flex">
+        <div class="brand">
+            <h1>AI Resume Scanner</h1>
+            <p class="tag">Smart • Fast • Accurate</p>
+        </div>
+
+        <nav class="nav">
+            <a href="#">Home</a>
+            <a href="#">Docs</a>
+            <a href="#">About</a>
+        </nav>
+    </div>
+</header>
+
+<section class="hero container">
+    <div class="left-card animate">
+        <h2>Upload Resume & Job Description</h2>
+        <p class="muted">AI will compare and generate similarity score.</p>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label class="file-label">
+                <span class="file-title">Choose Resume File</span>
+                <input type="file" name="resume" required>
+            </label>
+
+            <label class="jd-label">Enter Job Description</label>
+            <textarea name="jd" rows="6" placeholder="Paste job description..." required></textarea>
+
+            <button class="btn primary" type="submit">Analyze Resume</button>
+        </form>
+    </div>
+
+    <div class="right-card animate">
+        <h3>AI Capabilities</h3>
+
+        <div class="stats">
+            <div class="stat"><div class="num">98%</div>Accuracy</div>
+            <div class="stat"><div class="num">0.2s</div>Speed</div>
+            <div class="stat"><div class="num">100+</div>Skills</div>
+        </div>
+
+        <p class="note">Models used: TF-IDF, Cosine Similarity, NLP</p>
+    </div>
+</section>
+
+<section class="steps container animate">
+    <h3>How It Works</h3>
+    <div class="step-grid">
+        <div class="step">1. Upload Resume</div>
+        <div class="step">2. Enter JD</div>
+        <div class="step">3. AI Analyzes</div>
+        <div class="step">4. Get Result</div>
+    </div>
+</section>
+
+<footer class="footer">
+    © 2025 AI Resume Scanner
+</footer>
+
+</body>
+</html>
