@@ -1,37 +1,610 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Resume Results</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ResumeIQ | Analysis Report</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-<div class="container results-page animate">
-    <div class="results-card">
-        <h2>Resume Screening Results</h2>
-        <p class="muted">AI analyzed your resume and job description.</p>
+<!-- ================= NAVBAR ================= -->
+
+<header class="topbar">
+
+    <div class="container top-flex">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                AI
+            </div>
+
+            <div>
+                <h1>Resume<span>IQ</span></h1>
+
+                <p class="tag">
+                    AI Resume Intelligence
+                </p>
+            </div>
+
+        </div>
+
+        <nav class="nav">
+
+            <a href="/">Home</a>
+            <a href="/#features">Features</a>
+            <a href="/#how-it-works">How It Works</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- ================= RESULT ================= -->
+
+<main class="results-page">
+
+<div class="results-card">
+
+    <!-- HEADER -->
+
+    <div class="report-header">
+
+        <div>
+
+            <p class="eyebrow">
+                AI ANALYSIS COMPLETE
+            </p>
+
+            <h1>
+                Resume Intelligence Report
+            </h1>
+
+            <p class="muted">
+                Your resume has been analyzed against
+                the target job description.
+            </p>
+
+        </div>
+
+        <div class="report-badge">
+            ✓ Analysis Complete
+        </div>
+
+    </div>
+
+
+    <!-- ================= SCORE CARDS ================= -->
+
+    <div class="score-grid">
+
+
+        <!-- ATS SCORE -->
+
+        <div class="score-card">
+
+            <p class="card-label">
+                ATS SCORE
+            </p>
+
+            <div class="big-score">
+                {{ ats["ats_score"] }}
+                <span>/100</span>
+            </div>
+
+
+            {% if ats["ats_score"] >= 80 %}
+
+                <p class="score-status excellent">
+                    Excellent ATS Compatibility
+                </p>
+
+            {% elif ats["ats_score"] >= 60 %}
+
+                <p class="score-status good">
+                    Good ATS Compatibility
+                </p>
+
+            {% else %}
+
+                <p class="score-status improve">
+                    Needs Improvement
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- JOB MATCH -->
+
+        <div class="score-card">
+
+            <p class="card-label">
+                JOB MATCH
+            </p>
+
+            {% if data %}
+
+                {% set current = data[0] %}
+
+                <div class="big-score">
+                    {{ current["Match Score"] }}
+                    <span>%</span>
+                </div>
+
+            {% else %}
+
+                <div class="big-score">
+                    0
+                    <span>%</span>
+                </div>
+
+            {% endif %}
+
+            <p class="score-status">
+                Job Description Match
+            </p>
+
+        </div>
+
+
+        <!-- KEYWORD MATCH -->
+
+        <div class="score-card">
+
+            <p class="card-label">
+                KEYWORD MATCH
+            </p>
+
+            <div class="big-score">
+                {{ ats["keyword_score"] }}
+                <span>%</span>
+            </div>
+
+            <p class="score-status">
+                Relevant Job Keywords
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= ATS BREAKDOWN ================= -->
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <div>
+
+                <p class="eyebrow">
+                    ATS ANALYSIS
+                </p>
+
+                <h2>
+                    Score Breakdown
+                </h2>
+
+            </div>
+
+        </div>
+
+
+        <div class="breakdown-grid">
+
+
+            <div class="metric-card">
+
+                <span>
+                    Contact Information
+                </span>
+
+                <strong>
+                    {{ ats["contact_score"] }}/10
+                </strong>
+
+                <div class="progress">
+                    <div
+                        style="width: {{ ats['contact_score'] * 10 }}%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Resume Sections
+                </span>
+
+                <strong>
+                    {{ ats["section_score"] }}/15
+                </strong>
+
+                <div class="progress">
+                    <div
+                        style="width: {{ (ats['section_score'] / 15) * 100 }}%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Technical Skills
+                </span>
+
+                <strong>
+                    {{ ats["skills_score"] }}/20
+                </strong>
+
+                <div class="progress">
+                    <div
+                        style="width: {{ (ats['skills_score'] / 20) * 100 }}%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Experience
+                </span>
+
+                <strong>
+                    {{ ats["experience_score"] }}/15
+                </strong>
+
+                <div class="progress">
+                    <div
+                        style="width: {{ (ats['experience_score'] / 15) * 100 }}%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Projects
+                </span>
+
+                <strong>
+                    {{ ats["projects_score"] }}/10
+                </strong>
+
+                <div class="progress">
+                    <div
+                        style="width: {{ ats['projects_score'] * 10 }}%">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="metric-card">
+
+                <span>
+                    Resume Quality
+                </span>
+
+                <strong>
+                    {{ ats["quality_score"] }}/10
+                </strong>
+
+                <div class="progress">
+                    <div
+                        style="width: {{ ats['quality_score'] * 10 }}%">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= KEYWORD ANALYSIS ================= -->
+
+    <section class="section">
+
+        <p class="eyebrow">
+            JOB DESCRIPTION ANALYSIS
+        </p>
+
+        <h2>
+            Keyword Intelligence
+        </h2>
+
+
+        <div class="keyword-grid">
+
+
+            <!-- MATCHED -->
+
+            <div class="keyword-box matched-box">
+
+                <div class="keyword-heading">
+
+                    <span class="keyword-icon matched-icon">
+                        ✓
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Matched Keywords
+                        </h3>
+
+                        <p>
+                            Skills found in your resume
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="keyword-list">
+
+                    {% for keyword in ats["matched_keywords"] %}
+
+                        <span class="keyword matched">
+                            ✓ {{ keyword }}
+                        </span>
+
+                    {% else %}
+
+                        <p class="empty-text">
+                            No matching keywords found.
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- MISSING -->
+
+            <div class="keyword-box missing-box">
+
+                <div class="keyword-heading">
+
+                    <span class="keyword-icon missing-icon">
+                        !
+                    </span>
+
+                    <div>
+
+                        <h3>
+                            Missing Keywords
+                        </h3>
+
+                        <p>
+                            Relevant skills missing from resume
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="keyword-list">
+
+                    {% for keyword in ats["missing_keywords"] %}
+
+                        <span class="keyword missing">
+                            + {{ keyword }}
+                        </span>
+
+                    {% else %}
+
+                        <p class="empty-text">
+                            No important keywords are missing.
+                        </p>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= DETECTED SKILLS ================= -->
+
+    <section class="section">
+
+        <p class="eyebrow">
+            RESUME INTELLIGENCE
+        </p>
+
+        <h2>
+            Detected Technical Skills
+        </h2>
+
+        <div class="skills-container">
+
+            {% for skill in ats["skills"] %}
+
+                <span class="skill-tag">
+                    ✓ {{ skill }}
+                </span>
+
+            {% else %}
+
+                <p class="empty-text">
+                    No technical skills detected.
+                </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= AI RECOMMENDATIONS ================= -->
+
+    <section class="section">
+
+        <p class="eyebrow">
+            AI RECOMMENDATIONS
+        </p>
+
+        <h2>
+            How to Improve Your Resume
+        </h2>
+
+
+        <div class="suggestions-container">
+
+            {% for suggestion in ats["suggestions"] %}
+
+                <div class="suggestion">
+
+                    <span>
+                        💡
+                    </span>
+
+                    <p>
+                        {{ suggestion }}
+                    </p>
+
+                </div>
+
+            {% else %}
+
+                <div class="suggestion">
+
+                    <span>
+                        ✓
+                    </span>
+
+                    <p>
+                        Your resume looks well optimized.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CURRENT RESUME ================= -->
+
+    <section class="section">
+
+        <p class="eyebrow">
+            SCREENING RESULT
+        </p>
+
+        <h2>
+            Resume Match
+        </h2>
 
         <table class="results-table">
-            <tr>
-                <th>Resume</th>
-                <th>Match Score</th>
-            </tr>
 
-            {% for row in data %}
-            <tr>
-                <td>{{ row["Resume"] }}</td>
-                <td>{{ row["Match Score"] }}%</td>
-            </tr>
-            {% endfor %}
+            <thead>
+
+                <tr>
+                    <th>Resume</th>
+                    <th>Job Match</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for row in data %}
+
+                <tr>
+
+                    <td>
+                        {{ row["Resume"] }}
+                    </td>
+
+                    <td>
+
+                        <strong>
+                            {{ row["Match Score"] }}%
+                        </strong>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
         </table>
 
-        <p class="note">CSV file saved in <b>/output</b> folder.</p>
+    </section>
+
+
+    <!-- ================= ACTION ================= -->
+
+    <div class="action-area">
+
+        <a href="/" class="analyze-btn">
+            ← Analyze Another Resume
+        </a>
+
     </div>
+
 </div>
 
-<footer class="footer">© 2025 AI Resume Scanner</footer>
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div>
+
+        <strong>
+            ResumeIQ
+        </strong>
+
+        <p>
+            AI-Powered Resume Intelligence Platform
+        </p>
+
+    </div>
+
+    <p>
+        © 2026 ResumeIQ
+    </p>
+
+</footer>
 
 </body>
+
 </html>

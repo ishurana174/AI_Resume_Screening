@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ATS Analysis Result | ResumeIQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="topbar">
+
+    <div class="container top-flex">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                AI
+            </div>
+
+            <div>
+                <h1>
+                    Resume<span>IQ</span>
+                </h1>
+
+                <p class="tag">
+                    AI Resume Intelligence
+                </p>
+            </div>
+
+        </div>
+
+
+        <nav class="nav">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/ats-checker">
+                ATS Checker
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     RESULT PAGE
+===================================================== -->
+
+<main class="results-page">
+
+    <div class="results-card">
+
+
+        <!-- =================================================
+             REPORT HEADER
+        ================================================== -->
+
+        <div class="report-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    ATS RESUME ANALYSIS
+                </p>
+
+                <h1>
+                    Your Resume Score
+                </h1>
+
+                <p class="muted">
+                    {{ resume_name }}
+                </p>
+
+            </div>
+
+            <div class="report-badge">
+                AI ANALYZED
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MAIN SCORE
+        ================================================== -->
+
+        <div class="score-grid">
+
+
+            <!-- ATS SCORE -->
+
+            <div class="score-card ats-main-score-card">
+
+                <div class="card-label">
+                    ATS SCORE
+                </div>
+
+
+                <div class="ats-gauge-wrapper">
+
+                    <div
+                        class="ats-gauge"
+                        style="--score: {{ ats['ats_score'] }};"
+                    >
+
+                        <div class="ats-gauge-inner">
+
+                            <strong>
+                                {{ ats["ats_score"] }}
+                            </strong>
+
+                            <span>
+                                /100
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {% if ats["ats_score"] >= 85 %}
+
+                    <div class="score-status excellent">
+                        Excellent ATS Compatibility
+                    </div>
+
+                {% elif ats["ats_score"] >= 70 %}
+
+                    <div class="score-status good">
+                        Good ATS Compatibility
+                    </div>
+
+                {% elif ats["ats_score"] >= 40 %}
+
+                    <div class="score-status average">
+                        Average ATS Compatibility
+                    </div>
+
+                {% else %}
+
+                    <div class="score-status improve">
+                        Poor ATS Compatibility
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- TECHNICAL SKILLS -->
+
+            <div class="score-card">
+
+                <div class="card-label">
+                    TECHNICAL SKILLS
+                </div>
+
+                <div class="big-score">
+
+                    {{ ats["skills_score"] }}
+
+                    <span>
+                        /20
+                    </span>
+
+                </div>
+
+                <div class="score-status">
+                    Skills detected in resume
+                </div>
+
+            </div>
+
+
+            <!-- RESUME QUALITY -->
+
+            <div class="score-card">
+
+                <div class="card-label">
+                    RESUME QUALITY
+                </div>
+
+                <div class="big-score">
+
+                    {{ ats["quality_score"] }}
+
+                    <span>
+                        /10
+                    </span>
+
+                </div>
+
+                <div class="score-status">
+                    Content quality analysis
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SCORE SCALE
+        ================================================== -->
+
+        <section class="section ats-scale-section">
+
+            <h2>
+                ATS Score Guide
+            </h2>
+
+            <div class="ats-scale-grid">
+
+                <div class="ats-scale-item poor">
+
+                    <strong>
+                        0–39
+                    </strong>
+
+                    <span>
+                        Poor
+                    </span>
+
+                </div>
+
+
+                <div class="ats-scale-item average">
+
+                    <strong>
+                        40–69
+                    </strong>
+
+                    <span>
+                        Average
+                    </span>
+
+                </div>
+
+
+                <div class="ats-scale-item good">
+
+                    <strong>
+                        70–84
+                    </strong>
+
+                    <span>
+                        Good
+                    </span>
+
+                </div>
+
+
+                <div class="ats-scale-item excellent">
+
+                    <strong>
+                        85–100
+                    </strong>
+
+                    <span>
+                        Excellent
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SCORE BREAKDOWN
+        ================================================== -->
+
+        <section class="section">
+
+            <h2>
+                ATS Score Breakdown
+            </h2>
+
+            <p class="muted">
+                Detailed analysis of your resume.
+            </p>
+
+
+            <div class="breakdown-grid">
+
+
+                <!-- CONTACT -->
+
+                <div class="metric-card">
+
+                    <span>
+                        Contact Information
+                    </span>
+
+                    <strong>
+                        {{ ats["contact_score"] }}/10
+                    </strong>
+
+                    <div class="progress">
+
+                        <div
+                            style="width: {{ (ats['contact_score'] / 10) * 100 }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SECTIONS -->
+
+                <div class="metric-card">
+
+                    <span>
+                        Resume Sections
+                    </span>
+
+                    <strong>
+                        {{ ats["section_score"] }}/15
+                    </strong>
+
+                    <div class="progress">
+
+                        <div
+                            style="width: {{ (ats['section_score'] / 15) * 100 }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SKILLS -->
+
+                <div class="metric-card">
+
+                    <span>
+                        Technical Skills
+                    </span>
+
+                    <strong>
+                        {{ ats["skills_score"] }}/20
+                    </strong>
+
+                    <div class="progress">
+
+                        <div
+                            style="width: {{ (ats['skills_score'] / 20) * 100 }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EXPERIENCE -->
+
+                <div class="metric-card">
+
+                    <span>
+                        Experience
+                    </span>
+
+                    <strong>
+                        {{ ats["experience_score"] }}/15
+                    </strong>
+
+                    <div class="progress">
+
+                        <div
+                            style="width: {{ (ats['experience_score'] / 15) * 100 }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROJECTS -->
+
+                <div class="metric-card">
+
+                    <span>
+                        Projects
+                    </span>
+
+                    <strong>
+                        {{ ats["projects_score"] }}/10
+                    </strong>
+
+                    <div class="progress">
+
+                        <div
+                            style="width: {{ (ats['projects_score'] / 10) * 100 }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUALITY -->
+
+                <div class="metric-card">
+
+                    <span>
+                        Resume Quality
+                    </span>
+
+                    <strong>
+                        {{ ats["quality_score"] }}/10
+                    </strong>
+
+                    <div class="progress">
+
+                        <div
+                            style="width: {{ (ats['quality_score'] / 10) * 100 }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DETECTED SKILLS
+        ================================================== -->
+
+        <section class="section">
+
+            <h2>
+                Detected Technical Skills
+            </h2>
+
+            <p class="muted">
+                Skills identified from your resume.
+            </p>
+
+
+            <div class="skills-container">
+
+                {% if ats["skills"] %}
+
+                    {% for skill in ats["skills"] %}
+
+                        <span class="skill-tag">
+                            {{ skill }}
+                        </span>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <span class="muted">
+                        No technical skills detected.
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             RESUME STRENGTHS
+        ================================================== -->
+
+        <section class="section">
+
+            <p class="eyebrow">
+                RESUME HIGHLIGHTS
+            </p>
+
+            <h2>
+                Resume Strengths
+            </h2>
+
+            <p class="muted">
+                Strong points detected from your resume.
+            </p>
+
+
+            <div class="strengths-container">
+
+                {% if ats["strengths"] %}
+
+                    {% for strength in ats["strengths"] %}
+
+                        <div class="strength-card">
+
+                            <span class="strength-icon">
+                                ✓
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    {{ strength }}
+                                </strong>
+
+                                <p>
+                                    Detected from your resume analysis.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="strength-card">
+
+                        <span class="strength-icon">
+                            ✓
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Keep improving your resume
+                            </strong>
+
+                            <p>
+                                Add more relevant content and skills
+                                to build stronger resume signals.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MISSING SECTIONS DETECTOR
+        ================================================== -->
+
+        <section class="section">
+
+            <p class="eyebrow">
+                RESUME STRUCTURE
+            </p>
+
+            <h2>
+                Resume Sections
+            </h2>
+
+            <p class="muted">
+                Check which standard resume sections are present.
+            </p>
+
+
+            <div class="section-checker">
+
+
+                <!-- EDUCATION -->
+
+                <div class="section-check-item">
+
+                    <span>
+                        Education
+                    </span>
+
+                    {% if ats["section_details"]["Education"] %}
+
+                        <strong class="section-found">
+                            ✓
+                        </strong>
+
+                    {% else %}
+
+                        <strong class="section-missing">
+                            ✗
+                        </strong>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- SKILLS -->
+
+                <div class="section-check-item">
+
+                    <span>
+                        Skills
+                    </span>
+
+                    {% if ats["section_details"]["Skills"] %}
+
+                        <strong class="section-found">
+                            ✓
+                        </strong>
+
+                    {% else %}
+
+                        <strong class="section-missing">
+                            ✗
+                        </strong>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- PROJECTS -->
+
+                <div class="section-check-item">
+
+                    <span>
+                        Projects
+                    </span>
+
+                    {% if ats["section_details"]["Projects"] %}
+
+                        <strong class="section-found">
+                            ✓
+                        </strong>
+
+                    {% else %}
+
+                        <strong class="section-missing">
+                            ✗
+                        </strong>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- EXPERIENCE -->
+
+                <div class="section-check-item">
+
+                    <span>
+                        Experience
+                    </span>
+
+                    {% if ats["section_details"]["Experience"] %}
+
+                        <strong class="section-found">
+                            ✓
+                        </strong>
+
+                    {% else %}
+
+                        <strong class="section-missing">
+                            ✗
+                        </strong>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- CERTIFICATIONS -->
+
+                <div class="section-check-item">
+
+                    <span>
+                        Certifications
+                    </span>
+
+                    {% if ats["section_details"]["Certifications"] %}
+
+                        <strong class="section-found">
+                            ✓
+                        </strong>
+
+                    {% else %}
+
+                        <strong class="section-missing">
+                            ✗
+                        </strong>
+
+                    {% endif %}
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             AI IMPROVEMENT SUGGESTIONS
+        ================================================== -->
+
+        <section class="section">
+
+            <div class="suggestions-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        RESUME IMPROVEMENT
+                    </p>
+
+                    <h2>
+                        AI Improvement Suggestions
+                    </h2>
+
+                    <p class="muted">
+                        Improve these areas to increase your ATS readiness.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="suggestions-container">
+
+                {% if ats["suggestions"] %}
+
+                    {% for suggestion in ats["suggestions"] %}
+
+                        <div class="suggestion">
+
+                            <div class="suggestion-icon">
+                                ⚠
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    Improvement Needed
+                                </strong>
+
+                                <p>
+                                    {{ suggestion }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="suggestion suggestion-success">
+
+                        <div class="suggestion-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Excellent Resume
+                            </strong>
+
+                            <p>
+                                Your resume looks well optimized for ATS systems.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ACTION
+        ================================================== -->
+
+        <section class="section action-section">
+
+            <a
+                href="/ats-checker"
+                class="btn primary"
+            >
+                Analyze Another Resume →
+            </a>
+
+        </section>
+
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div>
+
+        <strong>
+            ResumeIQ
+        </strong>
+
+        <p>
+            AI-Powered Resume Intelligence Platform
+        </p>
+
+    </div>
+
+    <p>
+        © 2026 ResumeIQ
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>

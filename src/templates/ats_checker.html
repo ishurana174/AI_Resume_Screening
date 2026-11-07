@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ATS Score Checker | ResumeIQ</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<header class="topbar">
+
+    <div class="container top-flex">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                AI
+            </div>
+
+            <div>
+
+                <h1>
+                    Resume<span>IQ</span>
+                </h1>
+
+                <p class="tag">
+                    AI Resume Intelligence
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <nav class="nav">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/ats-checker">
+                ATS Score
+            </a>
+
+            <a href="/ats-checker#ats-features">
+                Features
+            </a>
+
+            <a href="/ats-checker#ats-how-it-works">
+                How It Works
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     ATS CHECKER MAIN
+===================================================== -->
+
+<main class="ats-main">
+
+
+    <div class="ats-main-grid">
+
+
+        <!-- =================================================
+             LEFT SIDE
+        ================================================= -->
+
+        <section class="ats-left-panel">
+
+
+            <p class="eyebrow">
+                FREE ATS SCORE CHECKER
+            </p>
+
+
+            <h1 class="ats-main-title">
+
+                Check Your Resume
+
+                <span>
+                    ATS Score
+                </span>
+
+            </h1>
+
+
+            <p class="ats-description">
+
+                Upload your resume and get your ATS
+                compatibility score without entering a
+                job description.
+
+            </p>
+
+
+
+            <!-- =================================================
+                 UPLOAD FORM
+            ================================================= -->
+
+            <form
+                action="/ats-check"
+                method="POST"
+                enctype="multipart/form-data"
+                class="ats-form"
+            >
+
+
+                <!-- RESUME UPLOAD -->
+
+                <label
+                    class="ats-upload-box"
+                    for="resume"
+                >
+
+                    <div class="ats-upload-icon">
+                        ↑
+                    </div>
+
+
+                    <div class="upload-content">
+
+                        <strong id="upload-title">
+                            Upload Your Resume
+                        </strong>
+
+                        <span id="upload-text">
+                            PDF or DOCX • Max recommended size 5MB
+                        </span>
+
+                    </div>
+
+
+                    <input
+                        id="resume"
+                        type="file"
+                        name="resume"
+                        accept=".pdf,.docx"
+                        required
+                    >
+
+                </label>
+
+
+
+                <!-- ANALYZE BUTTON -->
+
+                <button
+                    type="submit"
+                    class="btn primary analyze-button"
+                >
+
+                    <span>
+                        Analyze My Resume
+                    </span>
+
+                    <span>
+                        →
+                    </span>
+
+                </button>
+
+
+            </form>
+
+
+
+            <p class="checker-note">
+
+                🔒 Your resume is analyzed securely.
+
+            </p>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             RIGHT SIDE
+        ================================================= -->
+
+        <aside class="ats-right-panel">
+
+
+            <p class="eyebrow">
+                INTELLIGENT ANALYSIS
+            </p>
+
+
+            <h2>
+                What will you get?
+            </h2>
+
+
+            <p class="ats-right-description">
+
+                Our ATS analyzer checks your resume
+                for important recruitment factors.
+
+            </p>
+
+
+
+            <!-- ATS SCORE -->
+
+            <div class="ats-preview-score">
+
+                <div class="ats-score-circle">
+
+                    <span>
+                        ATS
+                    </span>
+
+                    <strong>
+                        100
+                    </strong>
+
+                    <small>
+                        /100
+                    </small>
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        ATS Score
+                    </h3>
+
+                    <p>
+                        Overall resume
+                        compatibility
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- ANALYSIS ITEMS -->
+
+
+            <div class="ats-analysis-item">
+
+                <div class="analysis-item-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong>
+                        Resume Quality
+                    </strong>
+
+                    <span>
+                        Check structure and content
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="ats-analysis-item">
+
+                <div class="analysis-item-icon">
+                    AI
+                </div>
+
+                <div>
+
+                    <strong>
+                        Skill Detection
+                    </strong>
+
+                    <span>
+                        Identify technical skills
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="ats-analysis-item">
+
+                <div class="analysis-item-icon">
+                    ✦
+                </div>
+
+                <div>
+
+                    <strong>
+                        AI Recommendations
+                    </strong>
+
+                    <span>
+                        Get resume improvement tips
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="ats-analysis-item">
+
+                <div class="analysis-item-icon">
+                    !
+                </div>
+
+                <div>
+
+                    <strong>
+                        Resume Readiness
+                    </strong>
+
+                    <span>
+                        Find weak areas in your resume
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     ATS FEATURES
+===================================================== -->
+
+<section class="ats-features-section" id="ats-features">
+
+    <div class="ats-section-heading">
+
+        <p class="eyebrow">
+            SMART ATS ANALYSIS
+        </p>
+
+
+        <h2>
+            What Does Our ATS Checker Analyze?
+        </h2>
+
+
+        <p class="muted">
+
+            Get a detailed analysis of your resume's ATS
+            readiness without entering a job description.
+
+        </p>
+
+    </div>
+
+
+
+    <div class="ats-features-grid">
+
+
+        <div class="ats-feature-card">
+
+            <div class="ats-feature-icon">
+                ✓
+            </div>
+
+            <h3>
+                ATS Score
+            </h3>
+
+            <p>
+                Get an overall ATS compatibility score
+                out of 100 for your resume.
+            </p>
+
+        </div>
+
+
+
+        <div class="ats-feature-card">
+
+            <div class="ats-feature-icon">
+                ◈
+            </div>
+
+            <h3>
+                Resume Quality
+            </h3>
+
+            <p>
+                Analyze your resume structure, content,
+                readability and overall quality.
+            </p>
+
+        </div>
+
+
+
+        <div class="ats-feature-card">
+
+            <div class="ats-feature-icon">
+                &lt;/&gt;
+            </div>
+
+            <h3>
+                Skill Detection
+            </h3>
+
+            <p>
+                Automatically detect technical skills
+                present in your resume.
+            </p>
+
+        </div>
+
+
+
+        <div class="ats-feature-card">
+
+            <div class="ats-feature-icon">
+                ✦
+            </div>
+
+            <h3>
+                AI Recommendations
+            </h3>
+
+            <p>
+                Get practical suggestions to improve
+                your resume and increase ATS readiness.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     HOW IT WORKS
+===================================================== -->
+
+<section class="ats-how-section" id="ats-how-it-works">
+
+    <div class="ats-section-heading">
+
+        <p class="eyebrow">
+            SIMPLE & FAST
+        </p>
+
+
+        <h2>
+            How It Works
+        </h2>
+
+
+        <p class="muted">
+
+            Check your resume's ATS compatibility in
+            just three simple steps.
+
+        </p>
+
+    </div>
+
+
+
+    <div class="ats-steps-grid">
+
+
+        <div class="ats-step-card">
+
+            <div class="ats-step-number">
+                01
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Upload Your Resume
+                </h3>
+
+                <p>
+                    Upload your resume in PDF or DOCX format.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="ats-step-card">
+
+            <div class="ats-step-number">
+                02
+            </div>
+
+
+            <div>
+
+                <h3>
+                    AI Analyzes Your Resume
+                </h3>
+
+                <p>
+                    Our system checks your contact details,
+                    sections, skills, experience and resume quality.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="ats-step-card">
+
+            <div class="ats-step-number">
+                03
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Get Your ATS Score
+                </h3>
+
+                <p>
+                    View your ATS score, detailed breakdown
+                    and personalized improvement suggestions.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div>
+
+        <strong>
+            ResumeIQ
+        </strong>
+
+        <p>
+            AI-Powered Resume Intelligence Platform
+        </p>
+
+    </div>
+
+
+    <p>
+        © 2026 ResumeIQ
+    </p>
+
+</footer>
+
+
+
+<!-- =====================================================
+     FILE NAME SCRIPT
+===================================================== -->
+
+<script>
+
+    const resumeInput =
+        document.getElementById("resume");
+
+    const uploadTitle =
+        document.getElementById("upload-title");
+
+    const uploadText =
+        document.getElementById("upload-text");
+
+
+    resumeInput.addEventListener(
+        "change",
+        function () {
+
+            if (this.files.length > 0) {
+
+                const file =
+                    this.files[0];
+
+                uploadTitle.textContent =
+                    file.name;
+
+                uploadText.textContent =
+                    "Resume selected successfully ✓";
+
+            }
+
+            else {
+
+                uploadTitle.textContent =
+                    "Upload Your Resume";
+
+                uploadText.textContent =
+                    "PDF or DOCX • Max recommended size 5MB";
+
+            }
+
+        }
+    );
+
+    /* =====================================================
+   RIGHT SIDE CARD CLICK GLOW
+===================================================== */
+
+const analysisItems =
+    document.querySelectorAll(".ats-analysis-item");
+
+
+analysisItems.forEach(function (item) {
+
+    item.addEventListener("click", function () {
+
+        // Remove active from all cards
+        analysisItems.forEach(function (card) {
+
+            card.classList.remove("active");
+
+        });
+
+
+        // Add active to clicked card
+        this.classList.add("active");
+
+    });
+
+});
+
+</script>
+
+<script>
+
+    const atsLink =
+        document.querySelector(".ats-nav-link");
+
+    atsLink.addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        document.body.classList.add("page-exit");
+
+        setTimeout(function () {
+
+            window.location.href =
+                atsLink.href;
+
+        }, 500);
+
+    });
+
+</script>
+</body>
+
+</html>
